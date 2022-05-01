@@ -168,3 +168,97 @@ extension SingleLinkedList: CustomStringConvertible {
         return result
     }
 }
+
+/*
+ MARK: Stack
+ */
+class Stack<T: Equatable> {
+    private var head: Node<T>?
+    
+    func push(data: T) {
+        if head == nil {
+            self.head = Node(data: data)
+            return
+        }
+        
+        var node = head
+        
+        while node?.next != nil {
+            node = node?.next
+        }
+        node?.next = Node(data: data)
+    }
+    
+    @discardableResult
+    func pop() -> Node<T>? {
+        guard head != nil else {
+            return nil
+        }
+        
+        
+        if head?.next == nil {
+            defer { head = nil }
+            return head
+        }
+        
+        var node = head
+        while node?.next?.next != nil {
+            node = node?.next
+        }
+        
+        defer { node?.next = node?.next?.next }
+        return  node?.next
+    }
+    
+    func count() -> Int {
+        guard head != nil else {
+            return 0
+        }
+        
+        var count = 0
+        
+        var node = head
+        
+        while node?.next != nil {
+            count += 1
+            node = node?.next
+        }
+        
+        count += 1
+        
+        return count
+    }
+    
+    var isEmpty: Bool {
+        return self.head == nil
+    }
+}
+extension Stack: CustomStringConvertible {
+    public var description: String {
+        var result: String = ""
+        
+        var node = head
+        
+        while node?.next != nil {
+            if let nodeData = node?.data {
+                if result.isEmpty == false {
+                    let oldResult = result
+                    result = "\(String(describing: nodeData))\n\(oldResult)"
+                } else {
+                    result += "\(String(describing: nodeData))"
+                }
+                
+                node = node?.next
+            }
+        }
+        
+        
+        if let nodeData = node?.data {
+            let oldResult = result
+            result = "\(nodeData)\n\(oldResult)"
+        }
+        
+        
+        return result
+    }
+}
