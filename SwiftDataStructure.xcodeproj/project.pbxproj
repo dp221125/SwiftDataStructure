@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		B9A22CC7281ED42700E161DF /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A22CC6281ED42700E161DF /* main.swift */; };
+		B9A22CD9281ED4C000E161DF /* BaseTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A22CD8281ED4C000E161DF /* BaseTestCase.swift */; };
+		B9A22CDB281ED4D500E161DF /* SingleLinkedListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A22CDA281ED4D500E161DF /* SingleLinkedListTests.swift */; };
+		B9A22CDC281ED4E400E161DF /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A22CC6281ED42700E161DF /* main.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,10 +28,20 @@
 /* Begin PBXFileReference section */
 		B9A22CC3281ED42700E161DF /* SwiftDataStructure */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SwiftDataStructure; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9A22CC6281ED42700E161DF /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		B9A22CD1281ED4A400E161DF /* SwiftDataStructureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftDataStructureTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9A22CD8281ED4C000E161DF /* BaseTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTestCase.swift; sourceTree = "<group>"; };
+		B9A22CDA281ED4D500E161DF /* SingleLinkedListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLinkedListTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		B9A22CC0281ED42700E161DF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9A22CCE281ED4A400E161DF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -42,6 +55,7 @@
 			isa = PBXGroup;
 			children = (
 				B9A22CC5281ED42700E161DF /* SwiftDataStructure */,
+				B9A22CD2281ED4A400E161DF /* SwiftDataStructureTests */,
 				B9A22CC4281ED42700E161DF /* Products */,
 			);
 			sourceTree = "<group>";
@@ -50,6 +64,7 @@
 			isa = PBXGroup;
 			children = (
 				B9A22CC3281ED42700E161DF /* SwiftDataStructure */,
+				B9A22CD1281ED4A400E161DF /* SwiftDataStructureTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -60,6 +75,15 @@
 				B9A22CC6281ED42700E161DF /* main.swift */,
 			);
 			path = SwiftDataStructure;
+			sourceTree = "<group>";
+		};
+		B9A22CD2281ED4A400E161DF /* SwiftDataStructureTests */ = {
+			isa = PBXGroup;
+			children = (
+				B9A22CD8281ED4C000E161DF /* BaseTestCase.swift */,
+				B9A22CDA281ED4D500E161DF /* SingleLinkedListTests.swift */,
+			);
+			path = SwiftDataStructureTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -82,6 +106,23 @@
 			productReference = B9A22CC3281ED42700E161DF /* SwiftDataStructure */;
 			productType = "com.apple.product-type.tool";
 		};
+		B9A22CD0281ED4A400E161DF /* SwiftDataStructureTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B9A22CD5281ED4A400E161DF /* Build configuration list for PBXNativeTarget "SwiftDataStructureTests" */;
+			buildPhases = (
+				B9A22CCD281ED4A400E161DF /* Sources */,
+				B9A22CCE281ED4A400E161DF /* Frameworks */,
+				B9A22CCF281ED4A400E161DF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SwiftDataStructureTests;
+			productName = SwiftDataStructureTests;
+			productReference = B9A22CD1281ED4A400E161DF /* SwiftDataStructureTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -93,6 +134,9 @@
 				LastUpgradeCheck = 1330;
 				TargetAttributes = {
 					B9A22CC2281ED42700E161DF = {
+						CreatedOnToolsVersion = 13.3;
+					};
+					B9A22CD0281ED4A400E161DF = {
 						CreatedOnToolsVersion = 13.3;
 					};
 				};
@@ -111,9 +155,20 @@
 			projectRoot = "";
 			targets = (
 				B9A22CC2281ED42700E161DF /* SwiftDataStructure */,
+				B9A22CD0281ED4A400E161DF /* SwiftDataStructureTests */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B9A22CCF281ED4A400E161DF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B9A22CBF281ED42700E161DF /* Sources */ = {
@@ -121,6 +176,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9A22CC7281ED42700E161DF /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9A22CCD281ED4A400E161DF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9A22CDB281ED4D500E161DF /* SingleLinkedListTests.swift in Sources */,
+				B9A22CD9281ED4C000E161DF /* BaseTestCase.swift in Sources */,
+				B9A22CDC281ED4E400E161DF /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,6 +327,36 @@
 			};
 			name = Release;
 		};
+		B9A22CD6281ED4A400E161DF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5BY5MQ6875;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.seokho.SwiftDataStructureTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B9A22CD7281ED4A400E161DF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5BY5MQ6875;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.seokho.SwiftDataStructureTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -279,6 +374,15 @@
 			buildConfigurations = (
 				B9A22CCB281ED42700E161DF /* Debug */,
 				B9A22CCC281ED42700E161DF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B9A22CD5281ED4A400E161DF /* Build configuration list for PBXNativeTarget "SwiftDataStructureTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B9A22CD6281ED4A400E161DF /* Debug */,
+				B9A22CD7281ED4A400E161DF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
