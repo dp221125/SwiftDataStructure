@@ -12,6 +12,7 @@
 		B9A22CDB281ED4D500E161DF /* SingleLinkedListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A22CDA281ED4D500E161DF /* SingleLinkedListTests.swift */; };
 		B9A22CDC281ED4E400E161DF /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A22CC6281ED42700E161DF /* main.swift */; };
 		B9A22CDE281ED60F00E161DF /* StackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A22CDD281ED60F00E161DF /* StackTests.swift */; };
+		B9A22CE02820257000E161DF /* QueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A22CDF2820257000E161DF /* QueueTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,6 +34,7 @@
 		B9A22CD8281ED4C000E161DF /* BaseTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTestCase.swift; sourceTree = "<group>"; };
 		B9A22CDA281ED4D500E161DF /* SingleLinkedListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLinkedListTests.swift; sourceTree = "<group>"; };
 		B9A22CDD281ED60F00E161DF /* StackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackTests.swift; sourceTree = "<group>"; };
+		B9A22CDF2820257000E161DF /* QueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 				B9A22CD8281ED4C000E161DF /* BaseTestCase.swift */,
 				B9A22CDA281ED4D500E161DF /* SingleLinkedListTests.swift */,
 				B9A22CDD281ED60F00E161DF /* StackTests.swift */,
+				B9A22CDF2820257000E161DF /* QueueTests.swift */,
 			);
 			path = SwiftDataStructureTests;
 			sourceTree = "<group>";
@@ -188,6 +191,7 @@
 			files = (
 				B9A22CDE281ED60F00E161DF /* StackTests.swift in Sources */,
 				B9A22CDB281ED4D500E161DF /* SingleLinkedListTests.swift in Sources */,
+				B9A22CE02820257000E161DF /* QueueTests.swift in Sources */,
 				B9A22CD9281ED4C000E161DF /* BaseTestCase.swift in Sources */,
 				B9A22CDC281ED4E400E161DF /* main.swift in Sources */,
 			);

@@ -81,8 +81,6 @@ class SingleLinkedList<T: Equatable> {
                 node = node?.next
             }
             
-          
-            
         }
         
         if currentIndex == index - 1 {
@@ -99,7 +97,6 @@ class SingleLinkedList<T: Equatable> {
         guard head != nil else {
             return
         }
-        
         
         if head?.next == nil {
             head = nil
@@ -139,8 +136,6 @@ class SingleLinkedList<T: Equatable> {
                 node = node?.next
             }
             
-           
-
         }
         
         if currentIndex == index - 1 {
@@ -228,6 +223,76 @@ extension Stack: CustomStringConvertible {
         if let nodeData = node?.data {
             let oldResult = result
             result = "\(oldResult)\n\(nodeData)"
+        }
+        
+        
+        return result
+    }
+}
+
+/*
+ MARK: Queue
+ */
+class Queue<T: Equatable> {
+    
+    private var head: Node<T>?
+    private var tail: Node<T>?
+    var count: Int = 0
+    
+    func enqueue(data: T) {
+        
+        let newNode = Node(data: data)
+        
+        if let tail = tail {
+            tail.next = newNode
+            self.tail = newNode
+        } else {
+            self.head = newNode
+            self.tail = newNode
+        }
+        
+        self.count += 1
+    }
+    
+    @discardableResult
+    func dequeue() -> Node<T>? {
+        
+        if let head = head {
+            self.head = head.next
+            self.count -= 1
+            defer {
+                if self.count == 0 {
+                    self.tail = nil
+                }
+            }
+            return head
+        }
+        
+        return nil
+    }
+    
+}
+extension Queue: CustomStringConvertible {
+    public var description: String {
+        var result: String = ""
+        
+        var node = head
+        
+        while node?.next != nil {
+            if let nodeData = node?.data {
+                if result.isEmpty == false {
+                    result += "\(String(describing: nodeData)) - "
+                } else {
+                    result += "\(String(describing: nodeData)) - "
+                }
+                
+                node = node?.next
+            }
+        }
+        
+        
+        if let nodeData = node?.data {
+            result += "\(nodeData)"
         }
         
         
