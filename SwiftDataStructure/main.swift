@@ -176,38 +176,26 @@ class Stack<T: Equatable> {
     private var head: Node<T>?
     
     func push(data: T) {
-        if head == nil {
+
+        if let head = head {
+            let newNode = Node(data: data)
+            newNode.next = head
+            self.head = newNode
+        } else {
             self.head = Node(data: data)
-            return
         }
         
-        var node = head
-        
-        while node?.next != nil {
-            node = node?.next
-        }
-        node?.next = Node(data: data)
     }
     
     @discardableResult
     func pop() -> Node<T>? {
-        guard head != nil else {
-            return nil
-        }
         
-        
-        if head?.next == nil {
-            defer { head = nil }
+        if let head = head {
+            defer { self.head = head.next }
             return head
         }
         
-        var node = head
-        while node?.next?.next != nil {
-            node = node?.next
-        }
-        
-        defer { node?.next = node?.next?.next }
-        return  node?.next
+        return nil
     }
     
     func count() -> Int {
@@ -243,7 +231,7 @@ extension Stack: CustomStringConvertible {
             if let nodeData = node?.data {
                 if result.isEmpty == false {
                     let oldResult = result
-                    result = "\(String(describing: nodeData))\n\(oldResult)"
+                    result = "\(oldResult)\n\(String(describing: nodeData))"
                 } else {
                     result += "\(String(describing: nodeData))"
                 }
@@ -255,7 +243,7 @@ extension Stack: CustomStringConvertible {
         
         if let nodeData = node?.data {
             let oldResult = result
-            result = "\(nodeData)\n\(oldResult)"
+            result = "\(oldResult)\n\(nodeData)"
         }
         
         
