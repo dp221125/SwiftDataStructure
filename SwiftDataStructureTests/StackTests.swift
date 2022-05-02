@@ -35,7 +35,7 @@ class StackTests: BaseTestCase {
             """
             )
             
-            XCTAssertEqual(self.stack.count(), 5)
+            XCTAssertEqual(self.stack.count, 5)
             XCTAssertFalse(self.stack.isEmpty)
         }
     }
@@ -68,7 +68,7 @@ class StackTests: BaseTestCase {
             )
             
             XCTAssertEqual(popResult.data, 5)
-            XCTAssertEqual(self.stack.count(), 4)
+            XCTAssertEqual(self.stack.count, 4)
             XCTAssertFalse(self.stack.isEmpty)
         }
     }
@@ -92,7 +92,7 @@ class StackTests: BaseTestCase {
             )
             
             XCTAssertNil(popResult)
-            XCTAssertEqual(self.stack.count(), 0)
+            XCTAssertEqual(self.stack.count, 0)
             XCTAssert(self.stack.isEmpty)
         }
     }
@@ -125,7 +125,7 @@ class StackTests: BaseTestCase {
             )
             
             XCTAssertEqual([5,4,3], popResult.map { $0.data} )
-            XCTAssertEqual(self.stack.count(), 2)
+            XCTAssertEqual(self.stack.count, 2)
             XCTAssertFalse(self.stack.isEmpty)
         }
     }
@@ -158,7 +158,7 @@ class StackTests: BaseTestCase {
             )
             
             XCTAssertEqual([5,4,3,2,1], popResult.map { $0.data} )
-            XCTAssertEqual(self.stack.count(), 0)
+            XCTAssertEqual(self.stack.count, 0)
             XCTAssert(self.stack.isEmpty)
         }
     }

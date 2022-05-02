@@ -174,6 +174,7 @@ extension SingleLinkedList: CustomStringConvertible {
  */
 class Stack<T: Equatable> {
     private var head: Node<T>?
+    private(set) var count = 0
     
     func push(data: T) {
 
@@ -185,36 +186,19 @@ class Stack<T: Equatable> {
             self.head = Node(data: data)
         }
         
+        count += 1
     }
     
     @discardableResult
     func pop() -> Node<T>? {
         
         if let head = head {
-            defer { self.head = head.next }
+            self.head = head.next
+            count -= 1
             return head
         }
-        
+
         return nil
-    }
-    
-    func count() -> Int {
-        guard head != nil else {
-            return 0
-        }
-        
-        var count = 0
-        
-        var node = head
-        
-        while node?.next != nil {
-            count += 1
-            node = node?.next
-        }
-        
-        count += 1
-        
-        return count
     }
     
     var isEmpty: Bool {
