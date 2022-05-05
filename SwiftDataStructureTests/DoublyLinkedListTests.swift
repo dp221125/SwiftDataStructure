@@ -26,6 +26,7 @@ class DoublyLinkedListTests: BaseTestCase {
         
         then {
             XCTAssertEqual(self.doublyLinkedList.description, "A -> B -> C -> D")
+            XCTAssertEqual(self.doublyLinkedList.descriptionFromTail, "D -> C -> B -> A")
         }
     }
     
@@ -44,6 +45,25 @@ class DoublyLinkedListTests: BaseTestCase {
 
         then {
             XCTAssertEqual(self.doublyLinkedList.description, "A -> B -> C -> D -> E")
+            XCTAssertEqual(self.doublyLinkedList.descriptionFromTail, "E -> D -> C -> B -> A")
+        }
+    }
+    
+    func test_DoublyLinkedList_0번째_insert() {
+        given {
+            self.doublyLinkedList = DoublyLinkedList<String>()
+        }
+
+        when {
+            self.doublyLinkedList.create(data: "B")
+            self.doublyLinkedList.create(data: "C")
+            self.doublyLinkedList.create(data: "D")
+            self.doublyLinkedList.insert(data: "A", at: 0)
+        }
+
+        then {
+            XCTAssertEqual(self.doublyLinkedList.description, "A -> B -> C -> D")
+            XCTAssertEqual(self.doublyLinkedList.descriptionFromTail, "D -> C -> B -> A")
         }
     }
     
@@ -62,6 +82,7 @@ class DoublyLinkedListTests: BaseTestCase {
 
         then {
             XCTAssertEqual(self.doublyLinkedList.description, "A -> B -> C -> E -> D")
+            XCTAssertEqual(self.doublyLinkedList.descriptionFromTail, "D -> E -> C -> B -> A")
         }
     }
     
@@ -80,6 +101,7 @@ class DoublyLinkedListTests: BaseTestCase {
 
         then {
             XCTAssertEqual(self.doublyLinkedList.description, "A -> B -> C -> D")
+            XCTAssertEqual(self.doublyLinkedList.descriptionFromTail, "D -> C -> B -> A")
         }
     }
     
@@ -94,6 +116,7 @@ class DoublyLinkedListTests: BaseTestCase {
 
         then {
             XCTAssertEqual(self.doublyLinkedList.description, "A")
+            XCTAssertEqual(self.doublyLinkedList.descriptionFromTail, "A")
         }
     }
 //
@@ -213,6 +236,7 @@ class DoublyLinkedListTests: BaseTestCase {
         
         then {
             XCTAssertEqual(self.doublyLinkedList.description, "A -> B -> C")
+            XCTAssertEqual(self.doublyLinkedList.descriptionFromTail, "C -> B -> A")
         }
     }
     
@@ -231,6 +255,26 @@ class DoublyLinkedListTests: BaseTestCase {
         
         then {
             XCTAssertEqual(self.doublyLinkedList.description, "A -> B -> D")
+            XCTAssertEqual(self.doublyLinkedList.descriptionFromTail, "D -> B -> A")
+        }
+    }
+    
+    func test_DoublyLinkedList_removeAt_마지막() {
+        given {
+            self.doublyLinkedList = DoublyLinkedList<String>()
+        }
+        
+        when {
+            self.doublyLinkedList.create(data: "A") // 0
+            self.doublyLinkedList.create(data: "B") // 1
+            self.doublyLinkedList.create(data: "C") // 2
+            self.doublyLinkedList.create(data: "D") // 3
+            self.doublyLinkedList.remove(at: 3)
+        }
+        
+        then {
+            XCTAssertEqual(self.doublyLinkedList.description, "A -> B -> C")
+            XCTAssertEqual(self.doublyLinkedList.descriptionFromTail, "C -> B -> A")
         }
     }
     
@@ -249,6 +293,7 @@ class DoublyLinkedListTests: BaseTestCase {
         
         then {
             XCTAssertEqual(self.doublyLinkedList.description, "A -> B -> C -> D")
+            XCTAssertEqual(self.doublyLinkedList.descriptionFromTail, "D -> C -> B -> A")
         }
     }
 

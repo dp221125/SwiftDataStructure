@@ -72,10 +72,10 @@ class SingleLinkedList<T: Equatable> {
     //삽입
     func insert(data: T, at index: Int) {
         
-        if head == nil && index == 0 {
-            self.head = Node(data: data)
-            return
-        } else if head == nil && index > 0 {
+        if index == 0 {
+            let newNode = Node(data: data)
+            newNode.next = self.head
+            self.head = newNode
             return
         }
         
@@ -200,7 +200,9 @@ class Stack<T: Equatable> {
     func pop() -> Node<T>? {
         
         if let head = head {
+            let oldHead = head
             self.head = head.next
+            oldHead.next = nil
             count -= 1
             return head
         }
@@ -270,13 +272,10 @@ class Queue<T: Equatable> {
     func dequeue() -> Node<T>? {
         
         if let head = head {
-            self.head = head.next
+            let oldHead = head
+            self.head = oldHead.next
+            oldHead.next = nil
             self.count -= 1
-            defer {
-                if self.count == 0 {
-                    self.tail = nil
-                }
-            }
             return head
         }
         
@@ -346,7 +345,9 @@ class DoublyLinkedList<T: Equatable> {
         }
         
         tail?.prev?.next = tail?.next
-        tail = tail?.prev
+        let tailNode = tail
+        tail = tailNode?.prev
+        tailNode?.prev = nil
     }
     
     func remove(at index: Int) {
@@ -357,7 +358,9 @@ class DoublyLinkedList<T: Equatable> {
         
         if index == 0 {
             head?.next?.prev = nil
-            head = head?.next
+            let head = self.head
+            self.head = head?.next
+            head?.next = nil
             return
         }
         
@@ -378,7 +381,13 @@ class DoublyLinkedList<T: Equatable> {
         }
         
         if currentIndex == index - 1 {
+            node?.next?.prev = nil
             node?.next = node?.next?.next
+            node?.next?.prev = node
+            
+            if node?.next == nil {
+                self.tail = node
+            }
         }
     }
     
@@ -395,7 +404,7 @@ class DoublyLinkedList<T: Equatable> {
             node = node?.next
         }
         
-        return node
+        return node?.data == data ? node : nil
     }
     
     func searchNodeFromTail(data: T) -> DoublelyNode<T>? {
@@ -411,17 +420,22 @@ class DoublyLinkedList<T: Equatable> {
             node = node?.prev
         }
         
-        return node
+        return node?.data == data ? node : nil
     }
     
     func insert(data: T, at index: Int) {
         
-        if head == nil && index == 0 {
-            self.head = DoublelyNode(data: data)
-            self.tail = self.head
-            return
-        } else if head == nil && index > 0 {
-            return
+        if index == 0 {
+            let newNode = DoublelyNode(data: data)
+            let head = self.head
+            newNode.next = head
+            head?.prev = newNode
+            self.head = newNode
+            
+            if tail == nil {
+                self.tail = self.head
+            }
+    
         }
         
         var node = head
@@ -445,7 +459,11 @@ class DoublyLinkedList<T: Equatable> {
             defer { node?.next = newNode }
             newNode.prev = node
             newNode.next = node?.next
-           
+            node?.next?.prev = newNode
+            
+            if newNode.next == nil {
+                tail = newNode
+            }
         }
 
     }
@@ -460,6 +478,23 @@ extension DoublyLinkedList: CustomStringConvertible {
             if let nodeData = node?.data {
                 result += "\(String(describing: nodeData)) -> "
                 node = node?.next
+            }
+        }
+        
+        result += "\(node!.data)"
+        
+        return result
+    }
+    
+    public var descriptionFromTail: String {
+        var result: String = ""
+        
+        var node = tail
+        
+        while node?.prev != nil {
+            if let nodeData = node?.data {
+                result += "\(String(describing: nodeData)) -> "
+                node = node?.prev
             }
         }
         

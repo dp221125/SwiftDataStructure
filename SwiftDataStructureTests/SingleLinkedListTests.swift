@@ -96,6 +96,23 @@ class SingleLinkedListTests: BaseTestCase {
         }
     }
     
+    func test_SingleLinkedList_0번째_insert() {
+        given {
+            self.singleLinkedList = SingleLinkedList<String>()
+        }
+        
+        when {
+            self.singleLinkedList.create(data: "B")
+            self.singleLinkedList.create(data: "C")
+            self.singleLinkedList.create(data: "D")
+            self.singleLinkedList.insert(data: "A", at: 0)
+        }
+        
+        then {
+            XCTAssertEqual(self.singleLinkedList.description, "A -> B -> C -> D")
+        }
+    }
+    
     func test_SingleLinkedList_아무것도_없는데_범위도_벗어난_insert() {
         given {
             self.singleLinkedList = SingleLinkedList<String>()
