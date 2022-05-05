@@ -276,6 +276,11 @@ class Queue<T: Equatable> {
             self.head = oldHead.next
             oldHead.next = nil
             self.count -= 1
+            
+            if self.head == nil {
+                self.tail = self.head
+            }
+            
             return head
         }
         
