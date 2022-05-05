@@ -14,6 +14,18 @@ class Node<T> {
         self.next = next
     }
 }
+
+class DoublelyNode<T> {
+    var data: T
+    var prev: DoublelyNode?
+    var next: DoublelyNode?
+    
+    init(data: T, prev: DoublelyNode? = nil, next: DoublelyNode? = nil) {
+        self.data = data
+        self.prev = prev
+        self.next = next
+    }
+}
 /*
  MARK: SingleLinkedList
  */
@@ -295,6 +307,163 @@ extension Queue: CustomStringConvertible {
             result += "\(nodeData)"
         }
         
+        
+        return result
+    }
+}
+
+/*
+ MARK: DoublyLinkedList
+ */
+
+class DoublyLinkedList<T: Equatable> {
+    private var head: DoublelyNode<T>?
+    private var tail: DoublelyNode<T>?
+    
+    func create(data: T) {
+        let newNode = DoublelyNode(data: data)
+        
+        if let tail = tail {
+            tail.next = newNode
+            newNode.prev = tail
+            self.tail = newNode
+        } else {
+            self.head = newNode
+            self.tail = self.head
+        }
+    }
+    
+    func removeLast() {
+        
+        guard head != nil || tail != nil else {
+            return
+        }
+        
+        if head?.next == nil {
+            head = nil
+            tail = nil
+            return
+        }
+        
+        tail?.prev?.next = tail?.next
+        tail = tail?.prev
+    }
+    
+    func remove(at index: Int) {
+        
+        guard head != nil || tail != nil else {
+            return
+        }
+        
+        if index == 0 {
+            head?.next?.prev = nil
+            head = head?.next
+            return
+        }
+        
+        var node = head
+        var currentIndex = 0
+        
+        for i in 0 ..< index {
+            currentIndex = i
+           
+            guard node?.next?.next != nil else {
+                break
+            }
+            
+            if currentIndex != index - 1 {
+                node = node?.next
+            }
+            
+        }
+        
+        if currentIndex == index - 1 {
+            node?.next = node?.next?.next
+        }
+    }
+    
+    func searchNodeFromHead(data: T) -> DoublelyNode<T>? {
+        
+        guard head != nil || tail != nil else {
+            return nil
+        }
+        
+        var node = head
+        
+        while node?.next != nil {
+            if node?.data == data { break }
+            node = node?.next
+        }
+        
+        return node
+    }
+    
+    func searchNodeFromTail(data: T) -> DoublelyNode<T>? {
+        
+        guard head != nil || tail != nil else {
+            return nil
+        }
+        
+        var node = tail
+        
+        while node?.prev != nil {
+            if node?.data == data { break }
+            node = node?.prev
+        }
+        
+        return node
+    }
+    
+    func insert(data: T, at index: Int) {
+        
+        if head == nil && index == 0 {
+            self.head = DoublelyNode(data: data)
+            self.tail = self.head
+            return
+        } else if head == nil && index > 0 {
+            return
+        }
+        
+        var node = head
+        var currentIndex = 0
+        
+        for i in 0 ..< index {
+            currentIndex = i
+            
+            guard node?.next != nil else {
+                break
+            }
+            
+            if currentIndex != index - 1 {
+                node = node?.next
+            }
+            
+        }
+        
+        if currentIndex == index - 1 {
+            let newNode = DoublelyNode(data: data)
+            defer { node?.next = newNode }
+            newNode.prev = node
+            newNode.next = node?.next
+           
+        }
+
+    }
+}
+extension DoublyLinkedList: CustomStringConvertible {
+    public var description: String {
+        var result: String = ""
+        
+        var node = head
+        
+        while node?.next != nil {
+            if let nodeData = node?.data {
+                result += "\(String(describing: nodeData)) -> "
+                node = node?.next
+            }
+        }
+        
+        result += "\(node!.data)"
         
         return result
     }
