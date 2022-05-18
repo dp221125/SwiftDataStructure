@@ -100,7 +100,7 @@ class SingleLinkedList<T: Equatable> {
             node?.next = Node(data: data)
             node?.next?.next = nextNode
         }
-
+        
     }
     
     //삭제
@@ -139,7 +139,7 @@ class SingleLinkedList<T: Equatable> {
         
         for i in 0 ..< index {
             currentIndex = i
-           
+            
             guard node?.next?.next != nil else {
                 break
             }
@@ -155,7 +155,7 @@ class SingleLinkedList<T: Equatable> {
         }
         
     }
-
+    
 }
 extension SingleLinkedList: CustomStringConvertible {
     public var description: String {
@@ -184,7 +184,7 @@ class Stack<T: Equatable> {
     private(set) var count = 0
     
     func push(data: T) {
-
+        
         if let head = head {
             let newNode = Node(data: data)
             newNode.next = head
@@ -206,7 +206,7 @@ class Stack<T: Equatable> {
             count -= 1
             return head
         }
-
+        
         return nil
     }
     
@@ -374,7 +374,7 @@ class DoublyLinkedList<T: Equatable> {
         
         for i in 0 ..< index {
             currentIndex = i
-           
+            
             guard node?.next?.next != nil else {
                 break
             }
@@ -440,7 +440,7 @@ class DoublyLinkedList<T: Equatable> {
             if tail == nil {
                 self.tail = self.head
             }
-    
+            
         }
         
         var node = head
@@ -470,7 +470,7 @@ class DoublyLinkedList<T: Equatable> {
                 tail = newNode
             }
         }
-
+        
     }
 }
 extension DoublyLinkedList: CustomStringConvertible {
@@ -506,5 +506,150 @@ extension DoublyLinkedList: CustomStringConvertible {
         result += "\(node!.data)"
         
         return result
+    }
+}
+
+/*
+ MARK: BinaryNode
+ */
+
+enum Direction {
+    case left
+    case right
+}
+
+enum TreeError: Error {
+    case notVaildDirection(direction: Direction)
+}
+
+enum TreeOrderType {
+    case preorder
+    case inorder
+    case postorder
+}
+
+class BinaryNode<T: Equatable>: Equatable {
+    static func == (lhs: BinaryNode<T>, rhs: BinaryNode<T>) -> Bool {
+        return lhs.value == rhs.value && lhs.leftChild?.value == rhs.leftChild?.value && lhs.rightChild?.value == rhs.rightChild?.value
+    }
+    
+    var value: T
+    private var leftChild: BinaryNode?
+    private var rightChild: BinaryNode?
+    
+    init(value: T) {
+        self.value = value
+    }
+    
+    @discardableResult
+    func insertChild(parentNode: BinaryNode<T>, value: T, direction: Direction) throws -> BinaryNode<T> {
+        let newNode = BinaryNode(value: value)
+        
+        switch direction {
+        case .left:
+            if parentNode.leftChild == nil {
+                parentNode.leftChild = newNode
+                return newNode
+            } else {
+                throw TreeError.notVaildDirection(direction: .left)
+            }
+        case .right:
+            if parentNode.rightChild == nil {
+                parentNode.rightChild = newNode
+                return newNode
+            } else {
+                throw TreeError.notVaildDirection(direction: .right)
+            }
+        }
+        
+    }
+    
+    @discardableResult
+    func removeChid(parentNode: BinaryNode<T>, direction: Direction) throws -> T? {
+        switch direction {
+        case .left:
+            if let leftChild = leftChild {
+                let delete = leftChild.value
+                parentNode.leftChild = nil
+                return delete
+            } else {
+                throw TreeError.notVaildDirection(direction: .left)
+            }
+        case .right:
+            if let rightChild = rightChild {
+                let delete = rightChild.value
+                parentNode.rightChild = nil
+                return delete
+            } else {
+                throw TreeError.notVaildDirection(direction: .left)
+            }
+        }
+        
+    }
+    
+}
+extension BinaryNode {
+    private func preorder(action: (T) -> Void) {
+        action(value)
+        leftChild?.preorder(action: action)
+        rightChild?.preorder(action: action)
+    }
+    
+    private func inorder(action: (T) -> Void) {
+        leftChild?.inorder(action: action)
+        action(value)
+        rightChild?.inorder(action: action)
+    }
+    
+    private func postorder(action: (T) -> Void) {
+        leftChild?.postorder(action: action)
+        rightChild?.postorder(action: action)
+        action(value)
+    }
+    
+    func orderRunner(orderType: TreeOrderType) -> [T] {
+        var result = [T]()
+
+        switch orderType {
+        case .preorder:
+            self.preorder { value in result.append(value) }
+        case .inorder:
+            self.inorder { value in result.append(value) }
+        case .postorder:
+            self.postorder { value in result.append(value) }
+        }
+        
+        return result
+    }
+    
+    func levelOrder() -> [[T]] {
+        let queue = Queue<BinaryNode>()
+        var output = [[T]]()
+        queue.enqueue(data: self)
+        
+        while queue.count != 0 {
+            
+            var remainLevel = queue.count //동일레벨에서 남은 큐 갯수
+            var levelData = [T]()
+            
+            while remainLevel > 0 {
+                guard let node = queue.dequeue() else {
+                    return []
+                }
+                
+                if let left = node.data.leftChild {
+                    queue.enqueue(data: left)
+                }
+                
+                if let right = node.data.rightChild {
+                    queue.enqueue(data: right)
+                }
+                
+                levelData.append(node.data.value)
+                remainLevel -= 1
+            }
+            output.append(levelData)
+        }
+        return output
     }
 }
