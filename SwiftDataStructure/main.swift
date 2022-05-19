@@ -520,12 +520,30 @@ enum Direction {
 
 enum TreeError: Error {
     case notVaildDirection(direction: Direction)
+    case insertError
+    case removeError
 }
 
 enum TreeOrderType {
     case preorder
     case inorder
     case postorder
+}
+
+class BaseTreeNode<T: Equatable>: Equatable {
+    static func == (lhs: BaseTreeNode<T>, rhs: BaseTreeNode<T>) -> Bool {
+        return lhs.value == rhs.value && lhs.leftChild == rhs.leftChild && lhs.rightChild == rhs.rightChild
+    }
+    
+  public var value: T?
+  public var leftChild: BaseTreeNode?
+  public var rightChild: BaseTreeNode?
+  
+  public init(value: T?, left: BaseTreeNode? = nil, right: BaseTreeNode? = nil) {
+    self.value = value
+    self.leftChild = left
+    self.rightChild = right
+  }
 }
 
 class BinaryNode<T: Equatable>: Equatable {
@@ -646,6 +664,172 @@ extension BinaryNode {
                 }
                 
                 levelData.append(node.data.value)
+                remainLevel -= 1
+            }
+            output.append(levelData)
+        }
+        return output
+    }
+}
+
+class BinarySearchTree: Equatable {
+    static func == (lhs: BinarySearchTree, rhs: BinarySearchTree) -> Bool {
+        return lhs.root == rhs.root
+    }
+    
+    var root: BaseTreeNode<Int>
+    
+    init(value: Int) {
+        self.root = BaseTreeNode(value: value)
+    }
+
+    func insertValue(_ value: Int, parentNode: BaseTreeNode<Int>) throws {
+        
+        guard let parentValue = parentNode.value,
+              parentValue != value else {
+            return
+        }
+        
+        if parentValue > value {
+            guard let leftChild = parentNode.leftChild else {
+                parentNode.leftChild = BaseTreeNode(value: value)
+                return
+            }
+
+            try self.insertValue(value, parentNode: leftChild)
+        } else if value > parentValue {
+            guard let rightChild = parentNode.rightChild else {
+                parentNode.rightChild = BaseTreeNode(value: value)
+                return
+            }
+
+            try self.insertValue(value, parentNode: rightChild)
+        } else {
+            throw TreeError.insertError
+        }
+            
+    }
+    
+    func removeValue(_ value: Int, parentNode: BaseTreeNode<Int>) throws {
+        
+        guard let rootValue = root.value,
+              rootValue != value else {
+            self.root = BaseTreeNode(value: nil)
+            return
+        }
+              
+        guard let parentValue = parentNode.value else { throw TreeError.removeError }
+        
+        if parentValue > value {
+            guard let leftChild = parentNode.leftChild,
+                  let leftChildValue = leftChild.value else { throw TreeError.removeError }
+            
+            if leftChildValue == value {
+                parentNode.leftChild = nil
+                return
+            }
+            
+            try self.removeValue(value, parentNode: leftChild)
+            
+        } else if value > parentValue {
+            guard let rightChild = parentNode.rightChild,
+                  let rightChildValue = rightChild.value else { throw TreeError.removeError }
+            
+            if rightChildValue == value {
+                parentNode.rightChild = nil
+                return
+            }
+            
+            try self.removeValue(value, parentNode: rightChild)
+        }
+    }
+}
+extension BinarySearchTree {
+    private func preorder(node: BaseTreeNode<Int>?, action: (Int) -> Void) {
+        guard let node = node,
+              let nodeValue = node.value else { return }
+                
+        action(nodeValue)
+        
+        if node.leftChild != nil {
+            preorder(node: node.leftChild, action: action)
+        }
+        
+        if node.rightChild != nil {
+            preorder(node: node.rightChild, action: action)
+        }
+
+    }
+    
+    private func inorder(node: BaseTreeNode<Int>?, action: (Int) -> Void) {
+        guard let node = node,
+              let nodeValue = node.value else { return }
+
+        if node.leftChild != nil {
+            preorder(node: node.leftChild, action: action)
+        }
+        
+        action(nodeValue)
+        
+        if node.rightChild != nil {
+            preorder(node: node.rightChild, action: action)
+        }
+    }
+    
+    private func postorder(node: BaseTreeNode<Int>?, action: (Int) -> Void) {
+        guard let node = node,
+              let nodeValue = node.value else { return }
+
+        if node.leftChild != nil {
+            preorder(node: node.leftChild, action: action)
+        }
+        
+        if node.rightChild != nil {
+            preorder(node: node.rightChild, action: action)
+        }
+        
+        action(nodeValue)
+    }
+    
+    func orderRunner(orderType: TreeOrderType) -> [Int] {
+        var result = [Int]()
+
+        switch orderType {
+        case .preorder:
+            self.preorder(node: self.root) { value in result.append(value) }
+        case .inorder:
+            self.inorder(node: self.root) { value in result.append(value) }
+        case .postorder:
+            self.postorder(node: self.root) { value in result.append(value) }
+        }
+        
+        return result
+    }
+    
+    func levelOrder() -> [[Int]] {
+        let queue = Queue<BaseTreeNode<Int>>()
+        var output = [[Int]]()
+        queue.enqueue(data: self.root)
+        
+        while queue.count != 0 {
+            
+            var remainLevel = queue.count //동일레벨에서 남은 큐 갯수
+            var levelData = [Int]()
+            
+            while remainLevel > 0 {
+                guard let node = queue.dequeue() else {
+                    return []
+                }
+                
+                if let left = node.data.leftChild {
+                    queue.enqueue(data: left)
+                }
+                
+                if let right = node.data.rightChild {
+                    queue.enqueue(data: right)
+                }
+                
+                levelData.append(node.data.value!)
                 remainLevel -= 1
             }
             output.append(levelData)
